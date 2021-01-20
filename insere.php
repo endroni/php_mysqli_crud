@@ -4,6 +4,8 @@ $username = "root";
 $password = "";
 $dbname = "db_cinemas";
 
+$nome_filme = $_POST['txt_nome'];
+
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -13,9 +15,19 @@ if ($conn->connect_error) {
 }
 echo "Connected successfully" . "<br>";
 
-/* Buscando dados */
-$sql = "SELECT id_filme, nome_filme FROM tbl_filmes";
-$result = $conn->query($sql);
+/* Insere dados */
+$sql_insere = "INSERT INTO tbl_filmes (nome_filme)
+VALUES ('$nome_filme')";
+
+if ($conn->query($sql_insere) === TRUE) {
+    echo "New record created successfully";
+  } else {
+    echo "Error: " . $sql_insere . "<br>" . $conn->error;
+}
+
+/* Busca dados */
+$sql_insere = "SELECT id_filme, nome_filme FROM tbl_filmes";
+$result = $conn->query($sql_insere);
 
 if ($result->num_rows > 0) {
   // output data of each row
@@ -25,6 +37,7 @@ if ($result->num_rows > 0) {
 } else {
   echo "0 results";
 }
+
 
 mysqli_close($conn);
 ?>
